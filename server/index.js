@@ -20,13 +20,13 @@ app.use(cors());
 // use JWT auth to secure the api
 app.use(jwt());
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 // api routes
 app.use('/users', require('./users/users.controller'));
 
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 // global error handler
 app.use(errorHandler);
