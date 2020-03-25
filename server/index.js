@@ -25,7 +25,7 @@ app.get('/*', (req, res) => {
 });
 
 // api routes
-app.use('/users', require('./users/users.controller'));
+app.use('/api/users', require('./users/users.controller'));
 
 
 // global error handler
