@@ -22,7 +22,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'https://diploma-ab.herokuapp.com'
+            apiUrl: 'https://diploma-ab.herokuapp.com/api'
         })
     }
 }
