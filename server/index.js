@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
 
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -21,13 +22,17 @@ app.use(jwt());
 
 // api routes
 app.use('/users', require('./users/users.controller'));
-app.get('/', (req, res) => res.render('pages/index'));
+
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // global error handler
 app.use(errorHandler);
 
 // start server
-const port = 4000;
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000 ;
 const server = app.listen(port, function () {
     console.log('Server listening on port ' + port);
 });
