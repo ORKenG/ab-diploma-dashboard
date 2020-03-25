@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "concurrently \"cd server && npm i && npm run start\" \"cd client && npm i && npm run build\""
+    "start": "concurrently \"cd server && npm i && npm run start\" \"cd client && npm i && npm run build\"",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run start\""
   },
   "repository": {
     "type": "git",

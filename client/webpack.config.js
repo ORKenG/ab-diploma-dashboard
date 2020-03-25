@@ -23,7 +23,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'https://diploma-ab.herokuapp.com/api'
+            apiUrl: process.env.NODE_ENV === 'production' ? 'https://diploma-ab.herokuapp.com/api' : 'http://localhost:4000/api'
         })
     },
     output: {
