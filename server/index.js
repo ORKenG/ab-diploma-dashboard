@@ -20,11 +20,11 @@ app.use(cors());
 // use JWT auth to secure the api
 app.use(jwt());
 
-if (process.env.NODE_ENV === 'production') {
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+//   });
+// }
 
 // api routes
 app.use('/api/users', require('./users/users.controller'));
