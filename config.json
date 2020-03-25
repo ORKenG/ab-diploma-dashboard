@@ -1,0 +1,4 @@
+﻿{
+    "connectionString": "mongodb://localhost/ab-diploma-database",
+    "secret": "sWo2iPEPSn0LtV9y"
+}
