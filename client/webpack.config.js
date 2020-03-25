@@ -1,4 +1,5 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
     mode: 'development',
@@ -24,5 +25,8 @@ module.exports = {
         config: JSON.stringify({
             apiUrl: 'https://diploma-ab.herokuapp.com/api'
         })
+    },
+    output: {
+        path: path.resolve(__dirname, '../server/dist/')
     }
 }
