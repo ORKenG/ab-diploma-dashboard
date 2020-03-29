@@ -26,7 +26,6 @@ function register(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    console.dir('here');
     userService.getAll()
         .then(users => res.json(users))
         .catch(err => next(err));

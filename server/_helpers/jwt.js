@@ -1,6 +1,6 @@
 const expressJwt = require('express-jwt');
 const config = require('config.json');
-const userService = require('../users/user.service');
+const userService = require('../models/users/user.service');
 
 module.exports = jwt;
 
@@ -13,7 +13,8 @@ function jwt() {
             '/api/users/register',
             '/',
             '/login',
-            '/register'
+            '/register',
+            '/current'
         ]
     });
 }
