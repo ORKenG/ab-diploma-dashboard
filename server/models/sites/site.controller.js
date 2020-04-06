@@ -10,26 +10,42 @@ router.delete('/:id', _delete);
 
 module.exports = router;
 
-function getAll(req, res, next) {
-    siteService.getAll(req.params.userName)
-        .then(sites => res.json(sites))
-        .catch(err => next(err));
+async function getAll(req, res, next) {
+    try {
+        const sites = await siteService.getAll(req.params.userName);
+        return res.json(sites);
+    }
+    catch (err) {
+        return next(err);
+    }
 }
 
-function getById(req, res, next) {
-    siteService.getById(req.params.id)
-        .then(site => site ? res.json(site) : res.sendStatus(404))
-        .catch(err => next(err));
+async function getById(req, res, next) {
+    try {
+        const site = await siteService.getById(req.params.id);
+        return site ? res.json(site) : res.sendStatus(404);
+    }
+    catch (err) {
+        return next(err);
+    }
 }
 
-function _delete(req, res, next) {
-    siteService.delete(req.params.id)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+async function _delete(req, res, next) {
+    try {
+        await siteService.delete(req.params.id);
+        return res.json({});
+    }
+    catch (err) {
+        return next(err);
+    }
 }
 
-function create(req, res, next) {
-    siteService.create(req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+async function create(req, res, next) {
+    try {
+        await siteService.create(req.body);
+        return res.json({});
+    }
+    catch (err) {
+        return next(err);
+    }
 }
