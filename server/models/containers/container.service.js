@@ -9,18 +9,9 @@ module.exports = {
     pushContainerEvents,
     pushContainerStatistics,
     getAllContainers,
-    getContainerById
+    getContainerById,
+    getContainerStatistics
 };
-
-function makeID(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
 
 async function createContainersIfNotExisted(containersArray, siteID) {
     for (const containerSelector of containersArray) {
@@ -70,7 +61,47 @@ async function getContainerById(id) {
                 from: 'containerstatistics',
                 localField: 'containerSelector',
                 foreignField: 'containerSelector',
-                as: 'containerstatistics'
+                as: 'containerStatistics'
+            }
+        }
+    ]);
+}
+
+async function getContainerStatistics(containerID) {
+    let containerSelector;
+    await Container.findOne({'_id': containerID}, {'_id' : 0, 'containerSelector': 1}, (err, res) => {
+        containerSelector = res.containerSelector;
+    });
+    return await ContainerStatistics.aggregate([
+        {
+            $match: {
+                containerSelector
+            }
+        },
+        {
+            $group: {
+                '_id': '$testCaseId',
+                Clicked: { $sum: { $cond : [{ $eq: ['$click', true] }, 1, 0]} },
+                Viewed: { $sum: { $cond : [{ $eq: ['$view', true] }, 1, 0]} },
+                Hovered: { $sum: { $cond : [{ $eq: ['$mouseover', true] }, 1, 0]} },
+                Total: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                Total: 1,
+                Clicked: 1,
+                Viewed: 1,
+                Hovered: 1,
+                ClickedPercentages: {
+                    $divide: ['$Clicked', '$Total']
+                },
+                ViewedPercentages: {
+                    $divide: ['$Viewed', '$Total']
+                },
+                HoveredPercentages: {
+                    $divide: ['$Hovered', '$Total']
+                }
             }
         }
     ]);

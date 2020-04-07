@@ -6,6 +6,7 @@ const containerService = require('./container.service');
 router.post('/', create);
 router.get('/', getAllContainers);
 router.get('/:id', getContainerById);
+router.get('/:id/statistics', getContainerStatistics);
 
 module.exports = router;
 
@@ -36,6 +37,16 @@ async function getContainerById(req, res, next) {
     try {
         const containers = await containerService.getContainerById(req.params.id);
         return res.json({ containers });
+    }
+    catch (err) {
+        return next(err);
+    }
+}
+
+async function getContainerStatistics(req, res, next) {
+    try {
+        const statistics = await containerService.getContainerStatistics(req.params.id);
+        return res.json({ statistics });
     }
     catch (err) {
         return next(err);
