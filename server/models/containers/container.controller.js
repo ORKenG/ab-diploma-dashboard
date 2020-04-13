@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const containerService = require('./container.service');
+const siteService = require('../sites/site.service');
 
 // routes
-router.post('/', create);
+router.post('/save', create);
 router.get('/', getAllContainers);
 router.get('/:id', getContainerById);
 router.get('/:id/statistics', getContainerStatistics);
@@ -13,10 +14,15 @@ module.exports = router;
 
 async function create(req, res, next) {
     try {
-        await containerService.createContainersIfNotExisted(req.body.containersArray, req.query.siteID);
-        await containerService.pushContainerEvents(req.body.eventsHistory);
-        await containerService.pushContainerStatistics(req.body.eventAnalytics);
-        return res.json({});
+        const siteSecret = await siteService.getSiteSecretBySiteID(req.query.siteID);
+        if (siteSecret === req.body.siteSecret) {
+            const containerIDs = await containerService.createContainersIfNotExisted(req.body.containersArray, req.query.siteID);
+            await containerService.pushContainerEvents(containerIDs, req.body.eventsHistory, req.body.userSessionId, req.body.userDevice, req.body.userClient);
+            await containerService.pushContainerStatistics(containerIDs, req.body.eventAnalytics, req.body.userSessionId, req.body.userDevice, req.body.userClient);
+            return res.json({});
+        } else {
+            throw new Error('Site Secret is incorrect');
+        }
     }
     catch (err) {
         return next(err);

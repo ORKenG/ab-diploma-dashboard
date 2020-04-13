@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     siteID: {type: String, required: true},
-    containerSelector: { type: String, required: true, unique: true },
+    selector: { type: String, required: true },
     createdDate: { type: Date, default: Date.now }
 });
+
+schema.index({ siteID: 1, selector: 1}, { unique: true });
 
 schema.set('toJSON', { virtuals: true });
 

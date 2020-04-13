@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    containerSelector: { type: String, required: true },
+    containerID: { type: mongoose.ObjectId, required: true },
+    selector: { type: String, required: true },
     testCaseId: { type: String, required: true },
     userDevice: { type: String },
     userClient: { type: String },

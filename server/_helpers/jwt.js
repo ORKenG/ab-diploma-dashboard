@@ -14,7 +14,8 @@ function jwt() {
             '/',
             '/login',
             '/register',
-            '/current'
+            '/current',
+            '/api/containers/save'
         ]
     });
 }

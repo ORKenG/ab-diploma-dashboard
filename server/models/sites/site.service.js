@@ -5,6 +5,7 @@ module.exports = {
     getAll,
     getById,
     create,
+    getSiteSecretBySiteID,
     delete: _delete
 };
 
@@ -26,12 +27,22 @@ async function getById(id) {
     return await Site.findById(id);
 }
 
+async function getSiteSecretBySiteID(siteID) {
+    let siteSecret = null;
+    await Site.findOne({ siteID }, { 'siteSecret': 1, '_id': 0 }, (err, res) => {
+        siteSecret = res.siteSecret;
+    });
+
+    return siteSecret;
+}
+
 async function create(siteParam) {
     if (await Site.findOne({ siteName: siteParam.siteName })) {
         throw 'SiteName "' + siteParam.siteName + '" is already taken';
     }
 
     siteParam.siteID = makeID(16);
+    siteParam.siteSecret = makeID(32);
 
     const site = new Site(siteParam);
     await site.save();
