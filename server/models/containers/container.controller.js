@@ -5,7 +5,7 @@ const siteService = require('../sites/site.service');
 
 // routes
 router.post('/save', create);
-router.get('/', getAllContainers);
+router.get('/', getAllSiteContainers);
 router.get('/:id', getContainerById);
 router.get('/:id/statistics', getContainerStatistics);
 
@@ -29,9 +29,9 @@ async function create(req, res, next) {
     }
 }
 
-async function getAllContainers(req, res, next) {
+async function getAllSiteContainers(req, res, next) {
     try {
-        const containers = await containerService.getAllContainers();
+        const containers = await containerService.getAllSiteContainers(req.query.siteID);
         return res.json({ containers });
     }
     catch (err) {

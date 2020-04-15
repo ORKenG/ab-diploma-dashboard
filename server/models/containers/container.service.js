@@ -10,7 +10,8 @@ module.exports = {
     pushContainerStatistics,
     getAllContainers,
     getContainerById,
-    getContainerStatistics
+    getContainerStatistics,
+    getAllSiteContainers
 };
 
 async function createContainersIfNotExisted(containersArray, siteID) {
@@ -70,6 +71,10 @@ async function getAllContainers() {
     return await Container.find();
 }
 
+async function getAllSiteContainers(siteID) {
+    return await Container.find({ siteID });
+}
+
 async function getContainerById(id) {
     const mongooseID = mongoose.Types.ObjectId(id);
     return await Container.aggregate([
@@ -112,29 +117,62 @@ async function getContainerStatistics(containerID) {
                 }
             },
             {
-                $group: {
-                    '_id': '$testCaseId',
-                    Clicked: { $sum: { $cond : [{ $eq: ['$click', true] }, 1, 0]} },
-                    Viewed: { $sum: { $cond : [{ $eq: ['$view', true] }, 1, 0]} },
-                    Hovered: { $sum: { $cond : [{ $eq: ['$mouseover', true] }, 1, 0]} },
-                    Total: { $sum: 1 }
-                }
-            },
-            {
-                $project: {
-                    Total: 1,
-                    Clicked: 1,
-                    Viewed: 1,
-                    Hovered: 1,
-                    ClickedPercentages: {
-                        $divide: ['$Clicked', '$Total']
-                    },
-                    ViewedPercentages: {
-                        $divide: ['$Viewed', '$Total']
-                    },
-                    HoveredPercentages: {
-                        $divide: ['$Hovered', '$Total']
-                    }
+                $facet: {
+                    AbsoluteValues: [
+                        {
+                            $group: {
+                                '_id': '$testCaseId',
+                                Clicked: { $sum: { $cond : [{ $eq: ['$click', true] }, 1, 0]} },
+                                Viewed: { $sum: { $cond : [{ $eq: ['$view', true] }, 1, 0]} },
+                                Hovered: { $sum: { $cond : [{ $eq: ['$mouseover', true] }, 1, 0]} },
+                                Total: { $sum: 1 }
+                            }
+                        },
+                        {
+                            $project: {
+                                Total: 1,
+                                Clicked: 1,
+                                Viewed: 1,
+                                Hovered: 1,
+                                ClickedPercentages: {
+                                    $divide: ['$Clicked', '$Total']
+                                },
+                                ViewedPercentages: {
+                                    $divide: ['$Viewed', '$Total']
+                                },
+                                HoveredPercentages: {
+                                    $divide: ['$Hovered', '$Total']
+                                }
+                            }
+                        }
+                    ],
+                    UserGroupedValues: [
+                        {
+                            $group: {
+                                _id: {
+                                    testCaseId: '$testCaseId',
+                                    userSessionId: '$userSessionId'
+                                },
+                                isUserClicked: {
+                                    $max: '$click'
+                                },
+                                isUserHovered: {
+                                    $max: '$mouseover'
+                                },
+                                isUserViewed: {
+                                    $max: '$view'
+                                }
+                            }
+                        },
+                        {
+                            $group: {
+                                '_id': '$_id.testCaseId',
+                                uniqueUserClicked: { $sum: { $cond : [{ $eq: ['$isUserClicked', true] }, 1, 0]} },
+                                uniqueUserViewed: { $sum: { $cond : [{ $eq: ['$isUserViewed', true] }, 1, 0]} },
+                                uniqueUserHovered: { $sum: { $cond : [{ $eq: ['$isUserHovered', true] }, 1, 0]}}
+                            }
+                        }
+                    ]
                 }
             }
         ]);
