@@ -7,9 +7,9 @@ const schema = new Schema({
     testCaseId: { type: String, required: true },
     userDevice: { type: String },
     userClient: { type: String },
-    view: { type: Boolean, required: true, default: null },
-    click: { type: Boolean, required: true, default: null },
-    mouseover: { type: Boolean, required: true, default: null },
+    view: { type: Boolean, default: false },
+    click: { type: Boolean, default: false },
+    mouseover: { type: Boolean, default: false },
     createdDate: { type: Date, default: Date.now },
     userSessionId: { type: String, required: true }
 });

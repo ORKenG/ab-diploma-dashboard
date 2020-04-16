@@ -16,13 +16,13 @@ module.exports = {
 
 async function createContainersIfNotExisted(containersArray, siteID) {
     let containerIDs = [];
-    for (const selector of containersArray) {
-        await containerHandler(selector, siteID, containerIDs);
+    for (const containerObj of containersArray) {
+        await containerHandler(containerObj.selector, containerObj.containerDescription, siteID, containerIDs);
     }
     return containerIDs;
 }
 
-async function containerHandler(selector, siteID, containerIDs) {
+async function containerHandler(selector, description, siteID, containerIDs) {
     let containerFound = false;
     await Container.findOne({ selector, siteID }, {'_id': 1}, (err, res) => {
         if (res) {
@@ -34,7 +34,7 @@ async function containerHandler(selector, siteID, containerIDs) {
         }
     });
     if (!(containerFound)) {
-        const container = new Container({ selector, siteID });
+        const container = new Container({ selector, siteID, description });
         const result = await container.save();
         containerIDs.push({
             id: result._id,
