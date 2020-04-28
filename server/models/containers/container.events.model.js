@@ -8,7 +8,8 @@ const schema = new Schema({
     userDevice: { type: String },
     userClient: { type: String },
     eventType: { type: String, required: true },
-    userSessionId: { type: String, required: true }
+    userSessionId: { type: String, required: true },
+    sessionId: { type: String, required: true }
 });
 
 schema.set('toJSON', { virtuals: true });

@@ -3,9 +3,9 @@ const Site = db.Site;
 
 module.exports = {
     getAll,
-    getById,
     create,
     getSiteSecretBySiteID,
+    getUserIdBySiteID,
     delete: _delete
 };
 
@@ -19,12 +19,11 @@ function makeID(length) {
     return result;
 }
 
-async function getAll(userName) {
-    return await Site.find({ userName });
-}
-
-async function getById(id) {
-    return await Site.findById(id);
+async function getAll(userId) {
+    if (!userId) {
+        return null;
+    }
+    return await Site.find({ userId });
 }
 
 async function getSiteSecretBySiteID(siteID) {
@@ -36,18 +35,28 @@ async function getSiteSecretBySiteID(siteID) {
     return siteSecret;
 }
 
-async function create(siteParam) {
+async function getUserIdBySiteID(siteID) {
+    let userId = null;
+    await Site.findOne({ siteID }, { 'userId': 1, '_id': 0 }, (err, res) => {
+        userId = res.userId;
+    });
+
+    return userId;
+}
+
+async function create(siteParam, userId) {
     if (await Site.findOne({ siteName: siteParam.siteName })) {
         throw 'SiteName "' + siteParam.siteName + '" is already taken';
     }
 
     siteParam.siteID = makeID(16);
     siteParam.siteSecret = makeID(32);
+    siteParam.userId = userId;
 
     const site = new Site(siteParam);
     await site.save();
 }
 
-async function _delete(id) {
-    await Site.findByIdAndRemove(id);
+async function _delete(id, userId) {
+    await Site.findOneAndRemove({_id: id, userId});
 }

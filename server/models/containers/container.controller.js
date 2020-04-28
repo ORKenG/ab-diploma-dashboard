@@ -7,7 +7,6 @@ const siteService = require('../sites/site.service');
 router.post('/save', create);
 router.get('/', getAllSiteContainers);
 router.get('/:id', getContainerById);
-router.get('/:id/statistics', getContainerStatistics);
 
 module.exports = router;
 
@@ -15,9 +14,10 @@ module.exports = router;
 async function create(req, res, next) {
     try {
         const siteSecret = await siteService.getSiteSecretBySiteID(req.query.siteID);
+        const userId = await siteService.getUserIdBySiteID(req.query.siteID);
         if (siteSecret === req.body.siteSecret) {
-            const containerIDs = await containerService.createContainersIfNotExisted(req.body.containersArray, req.query.siteID);
-            await containerService.pushContainerEvents(containerIDs, req.body.eventsHistory, req.body.userSessionId, req.body.userDevice, req.body.userClient);
+            const containerIDs = await containerService.createContainersIfNotExisted(req.body.containersArray, req.query.siteID, userId);
+            await containerService.pushContainerEvents(containerIDs, req.body.eventsHistory, req.body.userSessionId, req.body.userDevice, req.body.userClient, req.body.sessionId);
             await containerService.pushContainerStatistics(containerIDs, req.body.eventAnalytics, req.body.userSessionId, req.body.userDevice, req.body.userClient);
             return res.json({});
         } else {
@@ -31,7 +31,7 @@ async function create(req, res, next) {
 
 async function getAllSiteContainers(req, res, next) {
     try {
-        const containers = await containerService.getAllSiteContainers(req.query.siteID);
+        const containers = await containerService.getAllSiteContainers(req.body.siteID, req.user.sub);
         return res.json({ containers });
     }
     catch (err) {
@@ -41,18 +41,8 @@ async function getAllSiteContainers(req, res, next) {
 
 async function getContainerById(req, res, next) {
     try {
-        const containers = await containerService.getContainerById(req.params.id);
+        const containers = await containerService.getContainerById(req.params.id, req.user.sub);
         return res.json({ containers });
-    }
-    catch (err) {
-        return next(err);
-    }
-}
-
-async function getContainerStatistics(req, res, next) {
-    try {
-        const statistics = await containerService.getContainerStatistics(req.params.id);
-        return res.json({ statistics });
     }
     catch (err) {
         return next(err);
