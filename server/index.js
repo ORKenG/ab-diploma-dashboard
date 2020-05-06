@@ -25,6 +25,7 @@ app.use(jwt());
 app.use('/api/users', require('./models/users/users.controller'));
 app.use('/api/sites', require('./models/sites/site.controller'));
 app.use('/api/containers', require('./models/containers/container.controller'));
+app.use('/api/library', require('./library/library.controller'));
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/*', (req, res) => {
