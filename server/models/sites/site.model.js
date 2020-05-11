@@ -6,6 +6,7 @@ const schema = new Schema({
     siteSecret: {type: String, unique: true, required: true},
     userId: { type: String, required: true },
     siteName: { type: String, required: true },
+    siteDescription: { type: String, required: true },
     createdDate: { type: Date, default: Date.now }
 });
 

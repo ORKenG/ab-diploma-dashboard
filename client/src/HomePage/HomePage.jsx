@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../_actions';
+import { sitesActions } from '../_actions';
 
+import SitesList from '../SitesList';
+import AddItem from '../AddItem';
 class HomePage extends React.Component {
     componentDidMount() {
         this.props.getUsers();
+        this.props.getSites();
     }
 
     handleDeleteUser(id) {
@@ -39,21 +43,28 @@ class HomePage extends React.Component {
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>
+
+                <div>
+                    <SitesList />
+                    <AddItem />
+                </div>
             </div>
         );
     }
 }
 
-function mapState(state) {
-    const { users, authentication } = state;
+function mapState({ users, authentication }) {
     const { user } = authentication;
     return { user, users };
 }
 
 const actionCreators = {
     getUsers: userActions.getAll,
-    deleteUser: userActions.delete
+    deleteUser: userActions.delete,
+    getSites: sitesActions.getSites,
 }
 
 const connectedHomePage = connect(mapState, actionCreators)(HomePage);
 export { connectedHomePage as HomePage };
+
+

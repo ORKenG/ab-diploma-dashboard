@@ -1,4 +1,4 @@
-const db = require('_helpers/db');
+const db = require('../../_helpers/db');
 const mongoose = require('mongoose');
 const Container = db.Container;
 const ContainerEvents = db.ContainerEvents;
