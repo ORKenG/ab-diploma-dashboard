@@ -163,9 +163,27 @@ async function getContainerById(id, userId) {
                                 {
                                     $group: {
                                         '_id': '$_id.testCaseId',
+                                        totalUniqueUsers: {$sum: 1},
                                         uniqueUserClicked: { $sum: { $cond : [{ $eq: ['$isUserClicked', true] }, 1, 0]} },
                                         uniqueUserViewed: { $sum: { $cond : [{ $eq: ['$isUserViewed', true] }, 1, 0]} },
                                         uniqueUserHovered: { $sum: { $cond : [{ $eq: ['$isUserHovered', true] }, 1, 0]}}
+                                    }
+                                },
+                                {
+                                    $project: {
+                                        totalUniqueUsers: 1,
+                                        uniqueUserClicked: 1,
+                                        uniqueUserViewed: 1,
+                                        uniqueUserHovered: 1,
+                                        uniqueUserClickedPercentages: {
+                                            $divide: ['$uniqueUserClicked', '$totalUniqueUsers']
+                                        },
+                                        uniqueUserViewedPercentages: {
+                                            $divide: ['$uniqueUserViewed', '$totalUniqueUsers']
+                                        },
+                                        uniqueUserHoveredPercentages: {
+                                            $divide: ['$uniqueUserHovered', '$totalUniqueUsers']
+                                        }
                                     }
                                 }
                             ]
