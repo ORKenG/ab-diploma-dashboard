@@ -8,6 +8,7 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import ContainersList  from '../ContainersList';
 
 import './app.scss';
 
@@ -24,17 +25,19 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-            <div className="jumbotron">
+            <div className="jumbotron min-vh-100">
                 <div className="container">
-                    <div className="col-sm-8 col-sm-offset-2">
+                    <div className="">
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
                         <Router history={history}>
                             <Switch>
                                 <PrivateRoute exact path="/" component={HomePage} />
+                                <PrivateRoute exact path="/containers/:siteName" component={ContainersList} />
                                 <Route path="/login" component={LoginPage} />
-                                <Route path="/register" component={RegisterPage} />
+                                <Route path="/register" component={ RegisterPage } />
+
                                 <Redirect from="*" to="/" />
                             </Switch>
                         </Router>

@@ -5,7 +5,7 @@ const siteService = require('../sites/site.service');
 
 // routes
 router.post('/save', create);
-router.get('/', getAllSiteContainers);
+router.post('/', getAllSiteContainers);
 router.get('/:id', getContainerById);
 
 module.exports = router;
