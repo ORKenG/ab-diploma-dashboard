@@ -34,10 +34,7 @@ const ContainersStatistic = ({ containerStatistics }) => {
         elementsTable = elements.map((item, index) => {
             return (
                 <div key={ item._id } className="row">
-                    <div className="col-1">
-                        { index + 1 }
-                    </div>
-                    <div className="col-1">
+                    <div className="col-2">
                         <div className="text-center">
                             { item._id }
                         </div>
@@ -92,10 +89,7 @@ const ContainersStatistic = ({ containerStatistics }) => {
     return (
         <div className="containerStatistics border p-2 m-3">
             <div className="row">
-                <div className="col-1">
-                    #
-                </div>
-                <div className="col-1">
+                <div className="col-2">
                     <div className="text-center">Test case ID</div>
                 </div>
                 <div className="col">

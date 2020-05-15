@@ -14,25 +14,10 @@ const ShowDetailsModal = ({ siteInfo: { siteName, siteDescription, id, siteID, s
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <b>Sine name :</b> { siteName }
-                </div>
-                <div>
-                    <b>Created Date :</b> { date }
-                </div>
-                <div>
-                    <b>id :</b> { id }
-                </div>
-                <div>
-                    <b>Site description :</b> { siteDescription }
-                </div>
-                <div>
                     <b>Site ID :</b> { siteID }
                 </div>
                 <div>
                     <b>Site secret :</b> { siteSecret }
-                </div>
-                <div>
-                    <b>User ID :</b> { userId }
                 </div>
             </Modal.Body>
             <Modal.Footer>

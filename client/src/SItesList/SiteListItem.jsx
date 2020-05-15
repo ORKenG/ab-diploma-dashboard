@@ -12,7 +12,7 @@ const SiteListItem = ({ siteInfo: { siteName, createdDate, deleting, siteDescrip
 
     return (
         <li className="list-group-item align-items-center d-flex">
-            <div className="site-details col-8">
+            <div className="site-details col-6">
                 <div className="row">
                     <div className="site-details__name col-4"> { siteName } </div>
                     <div className="site-details__created-date col-4"> { date } </div>
@@ -20,7 +20,7 @@ const SiteListItem = ({ siteInfo: { siteName, createdDate, deleting, siteDescrip
                 </div>
             </div>
             <Button variant="primary" onClick={() => setModalShow(true)}>
-                More details
+                Show credentials
             </Button>
             <button onClick={ removeSite } className="btn btn-outline-dark">
                 {message}
