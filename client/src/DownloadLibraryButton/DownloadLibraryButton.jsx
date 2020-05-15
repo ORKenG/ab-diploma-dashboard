@@ -1,6 +1,5 @@
 import config from 'config';
 import React from 'react';
-import { connect } from 'react-redux';
 
 const DownloadLibraryButton = () => {
   const handleCLick = () => {
@@ -26,15 +25,4 @@ const DownloadLibraryButton = () => {
   )
 }
 
-const mapStateToProps = state => ({
-  // blabla: state.blabla,
-});
-
-const mapDispatchToProps = dispatch => ({
-  // fnBlaBla: () => dispatch(action.name()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DownloadLibraryButton);
+export default DownloadLibraryButton;

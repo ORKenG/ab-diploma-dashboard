@@ -3,6 +3,7 @@ import SiteListItem from './SiteListItem';
 import { connect } from 'react-redux';
 import { sitesActions } from '../_actions';
 
+
 import './siteList.scss';
 
 const SitesList = ({ sites, removeSite }) => {
