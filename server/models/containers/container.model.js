@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     siteID: {type: String, required: true},
     selector: { type: String, required: true },
+    targetSelector: { type: String },
     description: { type: String },
     userId: { type: String, required: true },
     createdDate: { type: Date, default: Date.now }

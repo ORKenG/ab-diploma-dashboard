@@ -16,7 +16,8 @@ function jwt() {
             '/register',
             '/current',
             '/api/containers/save',
-            '/api/library/download'
+            '/api/library/download',
+            '/containers/:containerId'
         ]
     });
 }
