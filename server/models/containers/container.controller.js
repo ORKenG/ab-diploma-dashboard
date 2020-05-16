@@ -31,6 +31,7 @@ async function create(req, res, next) {
         }
     }
     catch (err) {
+        console.dir(err);
         return next(err);
     }
 }
