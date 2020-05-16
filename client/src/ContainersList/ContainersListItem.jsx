@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ContainersStatistic from '../ContainersStatistic'
 import Collapse from 'react-bootstrap/Collapse';
 
-const ContainersListItem = ({ container : {id, selector, description, createdDate, containerStatistics }, idx, getContainerInfo }) => {
+const ContainersListItem = ({ container : {id, selector, targetSelector, description, createdDate, containerStatistics }, getContainerInfo }) => {
     const [open, setOpen] = useState(false);
 
     const handleClick = () => {
@@ -20,12 +20,12 @@ const ContainersListItem = ({ container : {id, selector, description, createdDat
             <div className="row align-items-center">
                 <div className="col d-flex justify-content-center">
                     <div >
-                        {idx}
+                        { selector }
                     </div>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
                     <div>
-                        { selector }
+                        { targetSelector }
                     </div>
                 </div>
                 <div className="col-3 d-flex justify-content-center">

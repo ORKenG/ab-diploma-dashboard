@@ -36,10 +36,10 @@ const ContainersList = ({getContainers, sites, containers: {containers, loading}
                 <li className="list-group-item">
                     <div className="row align-items-center">
                         <div className="col-1 d-flex justify-content-center">
-                            <div> # </div>
+                            <div> Selector Name </div>
                         </div>
                         <div className="col-3 d-flex justify-content-center">
-                            <div> Selector name </div>
+                            <div> Target Selector </div>
                         </div>
                         <div className="col-3 d-flex justify-content-center">
                             <div> Description </div>
