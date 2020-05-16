@@ -15,7 +15,9 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+console.dir('here');
 app.use(cors());
+console.dir('here2');
 
 // use JWT auth to secure the api
 app.use(jwt());

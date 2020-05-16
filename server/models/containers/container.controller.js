@@ -14,7 +14,10 @@ module.exports = router;
 async function create(req, res, next) {
     try {
         const siteSecret = await siteService.getSiteSecretBySiteID(req.query.siteID);
+        console.dir(siteSecret);
         const userId = await siteService.getUserIdBySiteID(req.query.siteID);
+        console.dir(userId);
+        console.dir(siteSecret === req.body.siteSecret);
         if (siteSecret === req.body.siteSecret) {
             const containerIDs = await containerService.createContainersIfNotExisted(req.body.containersArray, req.query.siteID, userId);
             await containerService.pushContainerEvents(containerIDs, req.body.eventsHistory, req.body.userSessionId, req.body.userDevice, req.body.userClient, req.body.sessionId);
