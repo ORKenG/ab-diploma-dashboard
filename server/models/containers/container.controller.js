@@ -20,8 +20,11 @@ async function create(req, res, next) {
         console.dir(siteSecret === req.body.siteSecret);
         if (siteSecret === req.body.siteSecret) {
             const containerIDs = await containerService.createContainersIfNotExisted(req.body.containersArray, req.query.siteID, userId);
+            console.dir(containerIDs);
             await containerService.pushContainerEvents(containerIDs, req.body.eventsHistory, req.body.userSessionId, req.body.userDevice, req.body.userClient, req.body.sessionId);
+            console.dir('here3');
             await containerService.pushContainerStatistics(containerIDs, req.body.eventAnalytics, req.body.userSessionId, req.body.userDevice, req.body.userClient);
+            console.dir('here4')
             return res.json({});
         } else {
             throw new Error('Site Secret is incorrect');
