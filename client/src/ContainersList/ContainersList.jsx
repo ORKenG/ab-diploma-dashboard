@@ -35,7 +35,7 @@ const ContainersList = ({getContainers, sites, containers: {containers, loading}
             <ul className="list-group">
                 <li className="list-group-item">
                     <div className="row align-items-center">
-                        <div className="col-1 d-flex justify-content-center">
+                        <div className="col-2 d-flex justify-content-center">
                             <div> Selector Name </div>
                         </div>
                         <div className="col-3 d-flex justify-content-center">
@@ -44,7 +44,7 @@ const ContainersList = ({getContainers, sites, containers: {containers, loading}
                         <div className="col-3 d-flex justify-content-center">
                             <div> Description </div>
                         </div>
-                        <div className="col-3 d-flex justify-content-center">
+                        <div className="col-2 d-flex justify-content-center">
                             <div> Creation date</div>
                         </div>
                     </div>

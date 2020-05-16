@@ -18,7 +18,7 @@ const ContainersListItem = ({ container : {id, selector, targetSelector, descrip
     return (
         <li className="list-group-item">
             <div className="row align-items-center">
-                <div className="col d-flex justify-content-center">
+                <div className="col-2 d-flex justify-content-center">
                     <div >
                         { selector }
                     </div>
@@ -33,7 +33,7 @@ const ContainersListItem = ({ container : {id, selector, targetSelector, descrip
                         { description }
                     </div>
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-2 d-flex justify-content-center">
                     <div>
                         { date.toDateString() }
                     </div>
