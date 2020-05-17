@@ -13,6 +13,7 @@ module.exports = router;
 
 async function create(req, res, next) {
     try {
+        console.dir('create');
         const siteSecret = await siteService.getSiteSecretBySiteID(req.query.siteID);
         console.dir(siteSecret);
         const userId = await siteService.getUserIdBySiteID(req.query.siteID);
