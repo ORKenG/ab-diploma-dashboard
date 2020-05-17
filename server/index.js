@@ -16,7 +16,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const corsOptions = {
-    origin: true
+    origin: true,
+    credentials: true
 }
 app.use(cors(corsOptions));
 
