@@ -33,7 +33,6 @@ app.use('/api/library', require('./library/library.controller'));
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/*', (req, res) => {
-    console.dir(req.path);
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
   });
 }
